@@ -48,9 +48,24 @@ tail(cleaned_data)
 
 ## Liquidity Analysis
 
+#### Price Computation
+
 ```{r}
 # Determine number of trades in dataset.
 num_of_trades <- nrow(cleaned_data)
 
 paste("Total number of trades for AMZN on 01/04/2023:", num_of_trades)
+
+# Retrieve trade, bid, and ask prices.
+prices <- as.numeric(cleaned_data$Price)
+bids <- as.numeric(cleaned_data$Bid.Price)
+asks <- as.numeric(cleaned_data$Ask.Price)
+
+# Compute the mid price as the average of the bid and ask prices.
+mids <- (bids + asks) * 0.5
+```
+
+#### Trade vs. Mid Price Plotting
+
+```{r}
 ```
