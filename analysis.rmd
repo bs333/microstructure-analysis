@@ -21,4 +21,9 @@ library(highfrequency)
 Load and pre-process the TAQ data.
 
 ```{r}
+# Write file path for data.
+file_path <- 'amzn_tick_history_01_04_2023.csv'
+
+# Read in TAQ data.
+data <- read.csv(file_path)
 ```
