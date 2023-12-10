@@ -213,3 +213,21 @@ liquidity_22 <- getLiquidityMeasures(amzn_xts_22)
 liquidity_23 <- getLiquidityMeasures(amzn_xts_23)
 liquidity_24 <- getLiquidityMeasures(amzn_xts_24)
 ```
+
+```{r}
+## Calculate Quoted Spread for each bucket.
+
+# Initialize an empty vector to store the quoted spread means.
+quoted_spread_hr <- numeric(24)
+
+# Loop through 24 hours.
+for (i in 1:24) {
+  # Construct the variable name as a string.
+  var_name <- paste("liquidity_", i, sep = "")
+
+  # Use get() to retrieve the dataframe and calculate the mean quoted spread.
+  quoted_spread_hr[i] <- mean(as.numeric(get(var_name)$quotedSpread), na.rm = TRUE)
+}
+
+quoted_spread_hr
+```
