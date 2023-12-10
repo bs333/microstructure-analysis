@@ -22,8 +22,26 @@ Load and pre-process the TAQ data.
 
 ```{r}
 # Write file path for data.
-file_path <- 'amzn_tick_history_01_04_2023.csv'
+file_path <- 'C://Users//sbhatia2//OneDrive - stevens.edu//Desktop//amzn_tick_history_01_04_2023.csv'
 
 # Read in TAQ data.
 data <- read.csv(file_path)
+
+head(data)
+tail(data)
+
+# Display columns of dataset.
+colnames(data)
+
+head(data$Bid.Price)
+tail(data$Bid.Price)
+
+head(data$Ask.Price)
+tail(data$Ask.Price)
+
+# Remove rows with NA Bid/Ask prices.
+cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price), ]
+
+head(cleaned_data)
+tail(cleaned_data)
 ```
