@@ -72,5 +72,17 @@ plot(prices, type="l", col="red", main="Trade vs. Mid Prices",
      xlab="Trade Count",
      ylab="Trade Price")
 lines(mids, type="l", col="blue")
-
 ```
+
+#### Size Computation
+
+```{r}
+# Retrieve bid and ask sizes.
+bid_size <- as.numeric(cleaned_data$Bid.Size)
+ask_size <- as.numeric(cleaned_data$Ask.Size)
+
+# Compute the LOB imbalance at each time step as the sum of the bid and ask sizes.
+LOB_imbalance <- bid_size + ask_size
+```
+
+#### Trade Size Plotting
