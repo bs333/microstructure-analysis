@@ -288,3 +288,11 @@ for (i in 1:24) {
 
 effective_spread_hr
 ```
+
+#### Effective Spread Plotting
+
+```{r}
+# Plot Quoted Spread for 24 hours.
+plot(1:24, effective_spread_hr, type="p", pch=20, col="blue", main="Effective Spread", 
+     xlab = "Hour", ylab = "Values", ylim = c(0,0.15))
+```
