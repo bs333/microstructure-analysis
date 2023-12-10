@@ -68,4 +68,9 @@ mids <- (bids + asks) * 0.5
 #### Trade vs. Mid Price Plotting
 
 ```{r}
+plot(prices, type="l", col="red", main="Trade vs. Mid Prices", 
+     xlab="Trade Count",
+     ylab="Trade Price")
+lines(mids, type="l", col="blue")
+
 ```
