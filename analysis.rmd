@@ -1,0 +1,6 @@
+---
+title: "Empirical Analysis of AAPL Microstructure Data"
+author: "Sid Bhatia"
+date: "12/3/2023"
+output: pdf_document
+---
