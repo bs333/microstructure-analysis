@@ -241,6 +241,8 @@ liquidity_24 <- getLiquidityMeasures(amzn_xts_24)
 # }
 ```
 
+#### Quoted Spread Calculation
+
 ```{r}
 ## Calculate Quoted Spread for each bucket.
 
@@ -265,4 +267,24 @@ quoted_spread_hr
 # Plot Quoted Spread for 24 hours.
 plot(1:24, quoted_spread_hr, type="p", pch=20, col="blue", main="Quoted Spread", 
      xlab = "Hour", ylab = "Values", ylim = c(0,0.15))
+```
+
+#### Effective Spread Calculation
+
+```{r}
+## Calculate Effective Spread for each bucket.
+
+# Initialize an empty vector to store the effective spread means.
+effective_spread_hr <- numeric(24)
+
+# Loop through 24 hours.
+for (i in 1:24) {
+  # Construct the variable name as a string.
+  var_name <- paste("liquidity_", i, sep = "")
+
+  # Use get() to retrieve the dataframe and calculate the mean quoted spread.
+  effective_spread_hr[i] <- mean(as.numeric(get(var_name)$effectiveSpread), na.rm = TRUE)
+}
+
+effective_spread_hr
 ```
