@@ -93,3 +93,44 @@ plot(ask_size, col="orange", type="h",
      xlab="Trade Count", main="Trade Size at Best Quote")
 lines(bid_size, col="purple", type="h")
 ```
+
+#### Liquidity Measures
+
+```{r}
+# Convert Exchange Time column to be compatible with xts object.
+cleaned_data$Exch.Time <- as.POSIXct(paste("2000-01-01", cleaned_data$Exch.Time))
+
+# Convert dataframe into xts object.
+amzn_xts <- xts(cleaned_data[,-which(names(cleaned_data) == "Exch.Time")], order.by = cleaned_data$Exch.Time)
+
+head(amzn_xts)
+tail(amzn_xts)
+
+head(amzn_xts$Bid.Price)
+
+# Rename Bid, Ask, and Symbol columns to match correct format.
+names(amzn_xts)[names(amzn_xts) == 'Bid.Price'] <- 'BID'
+names(amzn_xts)[names(amzn_xts) == 'ASK'] <- 'OFR'
+names(amzn_xts)[names(amzn_xts) == 'X.RIC'] <- 'SYMBOL'
+
+# Retrieve liquidity measures.
+liquidity_measures <- getLiquidityMeasures(amzn_xts)
+
+# Compute the Quoted Spread.
+quoted_spread <- mean(as.numeric(liquidity_measures$quotedSpread))
+
+quoted_spread
+
+# Compute the Effective Spread.
+effective_spread <- mean(as.numeric(liquidity_measures$effectiveSpread))
+
+effective_spread
+
+# Compute the Realized Spread.
+realized_spread <- mean(na.omit(as.numeric(liquidity_measures$realizedSpread)))
+
+realized_spread
+
+# Compute the Price Impact.
+price_impact <- mean(na.omit(as.numeric(liquidity_measures$priceImpact)))
+```
