@@ -137,7 +137,7 @@ price_impact <- mean(na.omit(as.numeric(liquidity_measures$priceImpact)))
 price_impact
 ```
 
-#### Time Bucket Analysis
+## Time Bucket Analysis
 
 ```{r}
 ## Split dataset into 24 buckets (24 hours) for analysis.
@@ -230,4 +230,12 @@ for (i in 1:24) {
 }
 
 quoted_spread_hr
+```
+
+## Quoted Spread Plotting
+
+```{r}
+# Plot Quoted Spread for 24 hours.
+plot(1:24, quoted_spread_hr, type="p", pch=20, col="blue", main="Quoted Spread", 
+     xlab = "Hour", ylab = "Values", ylim = c(0,0.15))
 ```
