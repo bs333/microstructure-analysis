@@ -4,3 +4,21 @@ author: "Sid Bhatia"
 date: "12/3/2023"
 output: pdf_document
 ---
+
+## Importation
+
+Import the required libraries.
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(xts)
+library(highfrequency)
+```
+
+## Data Pre-Processing
+
+Load and pre-process the TAQ data.
+
+```{r}
+```
