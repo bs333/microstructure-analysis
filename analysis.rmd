@@ -39,8 +39,8 @@ tail(data$Bid.Price)
 head(data$Ask.Price)
 tail(data$Ask.Price)
 
-# Remove rows with NA Bid/Ask prices.
-cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price), ]
+# Remove rows with NA Bid/Ask/Trade prices.
+cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price) & !is.na(data$Price), ]
 
 head(cleaned_data)
 tail(cleaned_data)
