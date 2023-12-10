@@ -48,7 +48,11 @@ tail(cleaned_data)
 
 ## Liquidity Analysis
 
+Perform core liquidity analysis for the project.
+
 #### Price Computation
+
+Retrieve and compute the bid, ask, trade, and mid prices.
 
 ```{r}
 # Determine number of trades in dataset.
@@ -67,6 +71,8 @@ mids <- (bids + asks) * 0.5
 
 #### Trade vs. Mid Price Plotting
 
+Plot the trade vs. mid prices.
+
 ```{r}
 plot(prices, type="l", col="red", main="Trade vs. Mid Prices", 
      xlab="Trade Count",
@@ -75,6 +81,8 @@ lines(mids, type="l", col="blue")
 ```
 
 #### Size Computation
+
+Retrieve and compute the bid and ask sizes as well as the LOB imbalances.
 
 ```{r}
 # Retrieve bid and ask sizes.
@@ -87,6 +95,8 @@ LOB_imbalance <- bid_size + ask_size
 
 #### Trade Size Plotting
 
+Plot the trade sizes.
+
 ```{r}
 plot(ask_size, col="orange", type="h", 
      ylab="Trade Size", 
@@ -95,6 +105,8 @@ lines(bid_size, col="purple", type="h")
 ```
 
 #### Liquidity Measures
+
+Compute the relevant liquidity measures.
 
 ```{r}
 # Convert Exchange Time column to be compatible with xts object.
@@ -138,6 +150,8 @@ price_impact
 ```
 
 ## Time Bucket Analysis
+
+Perform analysis on each hour in the dataset.
 
 ```{r}
 ## Split dataset into 24 buckets (24 hours) for analysis.
@@ -187,7 +201,8 @@ head(amzn_xts_24)
 ```
 
 ```{r}
-# Calculate liquidity measures for each subset.
+## Calculate liquidity measures for each subset.
+
 liquidity_1 <- getLiquidityMeasures(amzn_xts_1)
 liquidity_2 <- getLiquidityMeasures(amzn_xts_2)
 liquidity_3 <- getLiquidityMeasures(amzn_xts_3)
@@ -212,6 +227,18 @@ liquidity_21 <- getLiquidityMeasures(amzn_xts_21)
 liquidity_22 <- getLiquidityMeasures(amzn_xts_22)
 liquidity_23 <- getLiquidityMeasures(amzn_xts_23)
 liquidity_24 <- getLiquidityMeasures(amzn_xts_24)
+
+# # Initialize an empty list to store the liquidity measures.
+# liquidity_measures_list <- list()
+
+# # Loop through 24 subsets,
+# for (i in 1:24) {
+#   # Construct the variable name for each amzn_xts_*
+#   xts_var_name <- paste("amzn_xts_", i, sep = "")
+# 
+#   # Use get() to retrieve the xts object and calculate the liquidity measures.
+#   liquidity_measures_list[[paste("liquidity_", i, sep = "")]] <- getLiquidityMeasures(get(xts_var_name))
+# }
 ```
 
 ```{r}
@@ -232,7 +259,7 @@ for (i in 1:24) {
 quoted_spread_hr
 ```
 
-## Quoted Spread Plotting
+#### Quoted Spread Plotting
 
 ```{r}
 # Plot Quoted Spread for 24 hours.
