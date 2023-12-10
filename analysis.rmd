@@ -133,4 +133,83 @@ realized_spread
 
 # Compute the Price Impact.
 price_impact <- mean(na.omit(as.numeric(liquidity_measures$priceImpact)))
+
+price_impact
+```
+
+#### Time Bucket Analysis
+
+```{r}
+## Split dataset into 24 buckets (24 hours) for analysis.
+
+# amzn_data_list <- list()
+# 
+# for (i in 0:23)
+# {
+#   # Construct the time range string.
+#   start_hour <- sprintf("%02d:00", i)
+#   end_hour <- end_hour <- ifelse(i == 23, "23:59:59", sprintf("%02d:00", i + 1))
+#   time_range <- paste("T", start_hour, "/", "T", end_hour, sep = "")
+#   
+#   # Subset amzn_xts and store in the list.
+#   amzn_data_list[[paste("amzn_xts_", i + 1, sep = "")]] <- amzn_data_list[time_range]
+# }
+# 
+# amzn_data_list
+
+amzn_xts_1 <- amzn_xts["T00:00/T01:00"]
+amzn_xts_2 <- amzn_xts["T01:00/T02:00"]
+amzn_xts_3 <- amzn_xts["T02:00/T03:00"]
+amzn_xts_4 <- amzn_xts["T03:00/T04:00"]
+amzn_xts_5 <- amzn_xts["T04:00/T05:00"]
+amzn_xts_6 <- amzn_xts["T05:00/T06:00"]
+amzn_xts_7 <- amzn_xts["T06:00/T07:00"]
+amzn_xts_8 <- amzn_xts["T07:00/T08:00"]
+amzn_xts_9 <- amzn_xts["T08:00/T09:00"]
+amzn_xts_10 <- amzn_xts["T09:00/T10:00"]
+amzn_xts_11 <- amzn_xts["T10:00/T11:00"]
+amzn_xts_12 <- amzn_xts["T11:00/T12:00"]
+amzn_xts_13 <- amzn_xts["T12:00/T13:00"]
+amzn_xts_14 <- amzn_xts["T13:00/T14:00"]
+amzn_xts_15 <- amzn_xts["T14:00/T15:00"]
+amzn_xts_16 <- amzn_xts["T15:00/T16:00"]
+amzn_xts_17 <- amzn_xts["T16:00/T17:00"]
+amzn_xts_18 <- amzn_xts["T17:00/T18:00"]
+amzn_xts_19 <- amzn_xts["T18:00/T19:00"]
+amzn_xts_20 <- amzn_xts["T19:00/T20:00"]
+amzn_xts_21 <- amzn_xts["T20:00/T21:00"]
+amzn_xts_22 <- amzn_xts["T21:00/T22:00"]
+amzn_xts_23 <- amzn_xts["T22:00/T23:00"]
+amzn_xts_24 <- amzn_xts["T23:00/T23:59:59"]
+
+head(amzn_xts_1)
+head(amzn_xts_24)
+```
+
+```{r}
+# Calculate liquidity measures for each subset.
+liquidity_1 <- getLiquidityMeasures(amzn_xts_1)
+liquidity_2 <- getLiquidityMeasures(amzn_xts_2)
+liquidity_3 <- getLiquidityMeasures(amzn_xts_3)
+liquidity_4 <- getLiquidityMeasures(amzn_xts_4)
+liquidity_5 <- getLiquidityMeasures(amzn_xts_5)
+liquidity_6 <- getLiquidityMeasures(amzn_xts_6)
+liquidity_7 <- getLiquidityMeasures(amzn_xts_7)
+liquidity_8 <- getLiquidityMeasures(amzn_xts_8)
+liquidity_9 <- getLiquidityMeasures(amzn_xts_9)
+liquidity_10 <- getLiquidityMeasures(amzn_xts_10)
+liquidity_11 <- getLiquidityMeasures(amzn_xts_11)
+liquidity_12 <- getLiquidityMeasures(amzn_xts_12)
+liquidity_13 <- getLiquidityMeasures(amzn_xts_13)
+liquidity_14 <- getLiquidityMeasures(amzn_xts_14)
+liquidity_15 <- getLiquidityMeasures(amzn_xts_15)
+liquidity_16 <- getLiquidityMeasures(amzn_xts_16)
+liquidity_17 <- getLiquidityMeasures(amzn_xts_17)
+liquidity_18 <- getLiquidityMeasures(amzn_xts_18)
+liquidity_19 <- getLiquidityMeasures(amzn_xts_19)
+liquidity_20 <- getLiquidityMeasures(amzn_xts_20)
+liquidity_21 <- getLiquidityMeasures(amzn_xts_21)
+liquidity_22 <- getLiquidityMeasures(amzn_xts_22)
+liquidity_23 <- getLiquidityMeasures(amzn_xts_23)
+liquidity_24 <- getLiquidityMeasures(amzn_xts_24)
 ```
