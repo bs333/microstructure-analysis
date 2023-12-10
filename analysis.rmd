@@ -86,3 +86,10 @@ LOB_imbalance <- bid_size + ask_size
 ```
 
 #### Trade Size Plotting
+
+```{r}
+plot(ask_size, col="orange", type="h", 
+     ylab="Trade Size", 
+     xlab="Trade Count", main="Trade Size at Best Quote")
+lines(bid_size, col="purple", type="h")
+```
