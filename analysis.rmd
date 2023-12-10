@@ -10,10 +10,10 @@ output: pdf_document
 Import the required libraries.
 
 ```{r}
-library(tidyverse)
-library(lubridate)
-library(xts)
 library(highfrequency)
+library(tidyverse)
+library(xts)
+library(lubridate)
 ```
 
 ## Data Pre-Processing
@@ -44,4 +44,13 @@ cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price) & !is.na(da
 
 head(cleaned_data)
 tail(cleaned_data)
+```
+
+## Liquidity Analysis
+
+```{r}
+# Determine number of trades in dataset.
+num_of_trades <- nrow(cleaned_data)
+
+paste("Total number of trades for AMZN on 01/04/2023:", num_of_trades)
 ```
