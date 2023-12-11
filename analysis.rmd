@@ -27,23 +27,23 @@ file_path <- 'C://Users//sbhatia2//OneDrive - stevens.edu//Desktop//amzn_tick_hi
 # Read in TAQ data.
 data <- read.csv(file_path)
 
-head(data)
-tail(data)
+# head(data)
+# tail(data)
 
 # Display columns of dataset.
-colnames(data)
+# colnames(data)
 
-head(data$Bid.Price)
-tail(data$Bid.Price)
-
-head(data$Ask.Price)
-tail(data$Ask.Price)
+# head(data$Bid.Price)
+# tail(data$Bid.Price)
+# 
+# head(data$Ask.Price)
+# tail(data$Ask.Price)
 
 # Remove rows with NA Bid/Ask/Trade prices.
 cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price) & !is.na(data$Price), ]
 
-head(cleaned_data)
-tail(cleaned_data)
+# head(cleaned_data)
+# tail(cleaned_data)
 
 # Convert Exchange Time column to be compatible with xts object.
 cleaned_data$Exch.Time <- as.POSIXct(paste("2000-01-01", cleaned_data$Exch.Time))
@@ -56,8 +56,8 @@ names(amzn_xts)[names(amzn_xts) == 'Bid.Price'] <- 'BID'
 names(amzn_xts)[names(amzn_xts) == 'Ask.Price'] <- 'OFR'
 names(amzn_xts)[names(amzn_xts) == 'X.RIC'] <- 'SYMBOL'
 
-head(amzn_xts)
-tail(amzn_xts)
+# head(amzn_xts)
+# tail(amzn_xts)
 ```
 
 ## Liquidity Analysis
@@ -194,8 +194,8 @@ amzn_xts_22 <- amzn_xts["T21:00/T22:00"]
 amzn_xts_23 <- amzn_xts["T22:00/T23:00"]
 amzn_xts_24 <- amzn_xts["T23:00/T23:59:59"]
 
-head(amzn_xts_1)
-head(amzn_xts_24)
+# head(amzn_xts_1)
+# head(amzn_xts_24)
 ```
 
 ```{r}
