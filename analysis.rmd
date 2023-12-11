@@ -320,9 +320,7 @@ price_difference <- diff(prices)
 # Display autocorrelation of price differences.
 covpr <- acf(price_difference, lag.max=20, type="correlation", plot=FALSE)
 
-plot(covpr, col="purple", ylim = c(-0.05,1))
-
-title("Autocorrelation of Price Changes",line=-1)
+plot(covpr, col="purple", ylim = c(-0.05,1), main = "Autocorrelation of Price Changes")
 ```
 ```{r}
 ## Calculate parameters and estimates for Roll's Model.
@@ -347,6 +345,21 @@ sigu <- sqrt(sig2u)
 
 sigu
 ```
+#### Improved Roll Model Estimate
 
+```{r}
+# Retrieve trade signs.
+trade_signs <- getTradeDirection(amzn_xts)
+
+acf_TS <- acf(trade_signs, main="ACF Trade Signs")
+
+trade_signs_diff <- diff(trade_signs)
+
+mid_diff <- diff(mids)
+
+fit_lm <- lm(price_difference ~ mid_diff + trade_signs_diff)
+
+fit_lm$coeff[3]
+```
 
 
