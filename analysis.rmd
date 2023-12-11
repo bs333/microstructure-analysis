@@ -432,19 +432,56 @@ sell_trades_df <- data.frame(
 
 head(sell_trades_df)
 
-# num_buy_side <- length(matrix(buy_side))
+num_buy_side <- length(matrix(buy_side))
+
+num_buy_side
+
+num_sell_side <- length(trade_direction) - length(matrix(buy_side))
+
+num_sell_side
+
+num_of_trades <- cbind(num_buy_side, num_sell_side)
+
+num_of_trades
+
+# EHO_out <- EHO(as.numeric(buy_trades_df$Price), as.numeric(sell_trades_df$Price))
 # 
-# num_buy_side
-# 
-# num_sell_side <- length(trade_direction) - length(matrix(buy_side))
-# 
-# num_sell_side
-# 
-# num_of_trades <- cbind(num_buy_side, num_sell_side)
-# 
-# num_of_trades
-# 
-# initial_param <- cbind(0.15, 0.05, 0.5, 0.5)
-# 
-# EHO_out <- EHO(buy_side, sell_side)
+# model <- optim(initial_param, EHO_out, gr = NULL, method = c("Nelder-Mead"), hessian = FALSE)
+
+pin_likelihood <- function(params)
+{
+    epsilon <- params[1]
+    mu <- params[2]
+    alpha <- params[3]
+    delta <- params[4]
+
+    lambda_b <- alpha * mu + epsilon
+    lambda_s <- (1 - alpha) * mu + epsilon
+
+    # Calculating the Poisson probabilities
+    L_b <- dpois(num_of_trades[,1], lambda_b)
+    L_s <- dpois(num_of_trades[,2], lambda_s)
+
+    # To avoid log(0), we add a small number
+    L <- L_b * L_s + 1e-10
+
+    # Negative log-likelihood
+    result <- -sum(log(L))
+
+    return(result)
+}
+
+initial_params <- c(0.5, 0.5, 0.5, 0.5)
+
+result <- optim(initial_params, pin_likelihood, method = "L-BFGS-B", 
+                lower = c(0,0,0,0), upper = c(1,1,Inf,Inf))
+
+optim_params <- result$par
+alpha_hat <- optim_params[3]
+mu_hat <- optim_params[2]
+epsilon_hat <- optim_params[1]
+
+pin <- (alpha_hat * mu_hat) / (alpha_hat * mu_hat + 2 * epsilon_hat)
+
+pin
 ```
