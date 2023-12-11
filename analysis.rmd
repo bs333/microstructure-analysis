@@ -362,4 +362,36 @@ fit_lm <- lm(price_difference ~ mid_diff + trade_signs_diff)
 fit_lm$coeff[3]
 ```
 
+#### Signature Plot
 
+```{r}
+realized_var <- function(q)
+{
+  rCov(diff(prices, lag = q, differences = 1)) / q
+}
+
+realized_var_df <- NULL
+
+for(q in 1:200)
+{
+  realized_var_df <- c(realized_var_df, realized_var(q))
+}
+
+trades_per_five <- num_of_trades * 5 / 1440
+realized_var_five <- realized_var(trades_per_five)
+
+realized_var_five
+
+# Realized volatility sampling trades per five minutes.
+sqrt(realized_var_five)
+
+realized_volatility_roll <- sig2u * num_of_trades
+realized_volatility_roll
+
+sqrt(realized_volatility_roll)
+```
+```{r}
+plot(realized_var_df, type ="l",  main="Signature Plot for Prices & Roll")
+abline(h = realized_var_five,col="purple")
+abline(h = realized_volatility_roll,col="orange")
+```
