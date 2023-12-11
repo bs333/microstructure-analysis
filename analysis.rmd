@@ -395,3 +395,56 @@ plot(realized_var_df, type ="l",  main="Signature Plot for Prices & Roll")
 abline(h = realized_var_five,col="purple")
 abline(h = realized_volatility_roll,col="orange")
 ```
+
+## PIN (Probability of Informed Trading)
+
+Compute the Probability of Informed Trading (PIN) based on this formula:
+
+$$PIN = \frac{\alpha\mu}{\alpha\mu + \epsilon_B + \epsilon_S}$$
+
+```{r}
+library(InfoTrad)
+
+head(trade_signs)
+tail(trade_signs)
+
+trade_direction <- matrix(trade_signs)
+
+buy_side <- which(trade_direction > 0)
+
+head(buy_side)
+
+buy_trades_df <- data.frame(
+  BuyIndex <- buy_side,
+  BuyPrice <- amzn_xts$Price[buy_side]
+)
+
+head(buy_trades_df)
+
+sell_side <- which(trade_direction < 0)
+
+head(sell_side)
+
+sell_trades_df <- data.frame(
+  SellIndex <- sell_side,
+  SellPrice <- amzn_xts$Price[sell_side]
+)
+
+head(sell_trades_df)
+
+# num_buy_side <- length(matrix(buy_side))
+# 
+# num_buy_side
+# 
+# num_sell_side <- length(trade_direction) - length(matrix(buy_side))
+# 
+# num_sell_side
+# 
+# num_of_trades <- cbind(num_buy_side, num_sell_side)
+# 
+# num_of_trades
+# 
+# initial_param <- cbind(0.15, 0.05, 0.5, 0.5)
+# 
+# EHO_out <- EHO(buy_side, sell_side)
+```
