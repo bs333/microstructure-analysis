@@ -243,6 +243,8 @@ liquidity_24 <- getLiquidityMeasures(amzn_xts_24)
 
 #### Quoted Spread Calculation
 
+Calculated quoted spread for each hour.
+
 ```{r}
 ## Calculate Quoted Spread for each bucket.
 
@@ -263,6 +265,8 @@ quoted_spread_hr
 
 #### Quoted Spread Plotting
 
+Plot quoted spread for each hour.
+
 ```{r}
 # Plot Quoted Spread for 24 hours.
 plot(1:24, quoted_spread_hr, type="p", pch=20, col="blue", main="Quoted Spread", 
@@ -270,6 +274,8 @@ plot(1:24, quoted_spread_hr, type="p", pch=20, col="blue", main="Quoted Spread",
 ```
 
 #### Effective Spread Calculation
+
+Calculated effective spread for each hour.
 
 ```{r}
 ## Calculate Effective Spread for each bucket.
@@ -291,8 +297,56 @@ effective_spread_hr
 
 #### Effective Spread Plotting
 
+Plot quoted spread for each hour.
+
 ```{r}
 # Plot Quoted Spread for 24 hours.
 plot(1:24, effective_spread_hr, type="p", pch=20, col="blue", main="Effective Spread", 
      xlab = "Hour", ylab = "Values", ylim = c(0,0.15))
 ```
+
+## Volatility Estimate
+
+The following section estimates the volatility using various methods.
+
+#### Roll Model Estimate
+
+```{r}
+prices <- as.numeric(amzn_xts$Price)
+
+# Calculate price differences.
+price_difference <- diff(prices)
+
+# Display autocorrelation of price differences.
+covpr <- acf(price_difference, lag.max=20, type="correlation", plot=FALSE)
+
+plot(covpr, col="purple", ylim = c(-0.05,1))
+
+title("Autocorrelation of Price Changes",line=-1)
+```
+```{r}
+## Calculate parameters and estimates for Roll's Model.
+
+covpr <- acf(price_difference, lag.max=20, type="covariance", plot=FALSE)
+
+gamma0 <- sd(price_difference)^2
+
+gamma0
+
+gamma1 <- covpr$acf[2]
+
+gamma1
+
+cparam <- sqrt(-covpr$acf[2])
+
+cparam
+
+sig2u <- gamma0 + 2*gamma1
+
+sigu <- sqrt(sig2u)
+
+sigu
+```
+
+
+
