@@ -44,6 +44,20 @@ cleaned_data <- data[!is.na(data$Bid.Price) & !is.na(data$Ask.Price) & !is.na(da
 
 head(cleaned_data)
 tail(cleaned_data)
+
+# Convert Exchange Time column to be compatible with xts object.
+cleaned_data$Exch.Time <- as.POSIXct(paste("2000-01-01", cleaned_data$Exch.Time))
+
+# Convert dataframe into xts object.
+amzn_xts <- xts(cleaned_data[,-which(names(cleaned_data) == "Exch.Time")], order.by = cleaned_data$Exch.Time)
+
+# Rename Bid, Ask, and Symbol columns to match correct format.
+names(amzn_xts)[names(amzn_xts) == 'Bid.Price'] <- 'BID'
+names(amzn_xts)[names(amzn_xts) == 'Ask.Price'] <- 'OFR'
+names(amzn_xts)[names(amzn_xts) == 'X.RIC'] <- 'SYMBOL'
+
+head(amzn_xts)
+tail(amzn_xts)
 ```
 
 ## Liquidity Analysis
@@ -56,14 +70,14 @@ Retrieve and compute the bid, ask, trade, and mid prices.
 
 ```{r}
 # Determine number of trades in dataset.
-num_of_trades <- nrow(cleaned_data)
+num_of_trades <- nrow(amzn_xts)
 
 paste("Total number of trades for AMZN on 01/04/2023:", num_of_trades)
 
 # Retrieve trade, bid, and ask prices.
-prices <- as.numeric(cleaned_data$Price)
-bids <- as.numeric(cleaned_data$Bid.Price)
-asks <- as.numeric(cleaned_data$Ask.Price)
+prices <- as.numeric(amzn_xts$Price)
+bids <- as.numeric(amzn_xts$BID)
+asks <- as.numeric(amzn_xts$OFR)
 
 # Compute the mid price as the average of the bid and ask prices.
 mids <- (bids + asks) * 0.5
@@ -86,8 +100,8 @@ Retrieve and compute the bid and ask sizes as well as the LOB imbalances.
 
 ```{r}
 # Retrieve bid and ask sizes.
-bid_size <- as.numeric(cleaned_data$Bid.Size)
-ask_size <- as.numeric(cleaned_data$Ask.Size)
+bid_size <- as.numeric(amzn_xts$Bid.Size)
+ask_size <- as.numeric(amzn_xts$Ask.Size)
 
 # Compute the LOB imbalance at each time step as the sum of the bid and ask sizes.
 LOB_imbalance <- bid_size + ask_size
@@ -109,22 +123,6 @@ lines(bid_size, col="purple", type="h")
 Compute the relevant liquidity measures.
 
 ```{r}
-# Convert Exchange Time column to be compatible with xts object.
-cleaned_data$Exch.Time <- as.POSIXct(paste("2000-01-01", cleaned_data$Exch.Time))
-
-# Convert dataframe into xts object.
-amzn_xts <- xts(cleaned_data[,-which(names(cleaned_data) == "Exch.Time")], order.by = cleaned_data$Exch.Time)
-
-head(amzn_xts)
-tail(amzn_xts)
-
-head(amzn_xts$Bid.Price)
-
-# Rename Bid, Ask, and Symbol columns to match correct format.
-names(amzn_xts)[names(amzn_xts) == 'Bid.Price'] <- 'BID'
-names(amzn_xts)[names(amzn_xts) == 'ASK'] <- 'OFR'
-names(amzn_xts)[names(amzn_xts) == 'X.RIC'] <- 'SYMBOL'
-
 # Retrieve liquidity measures.
 liquidity_measures <- getLiquidityMeasures(amzn_xts)
 
